@@ -1,0 +1,14 @@
+# Environment
+.env
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Logs
+*.log
+
+# Generated data
+raw_weather.json
+transformed_data.json
