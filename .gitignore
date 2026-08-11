@@ -12,3 +12,6 @@ __pycache__/
 # Generated data
 raw_weather.json
 transformed_data.json
+
+# macOS
+.DS_Store
