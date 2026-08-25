@@ -1,21 +1,23 @@
 import json
 import logging
+from datetime import datetime, timezone
 
 logger = logging.getLogger(__name__)
 
 def transform():
     try:
-        with open("raw_weather.json", "r", encoding="utf-8") as file:
+        with open("data/raw_weather.json", "r", encoding="utf-8") as file:
             data = json.load(file)
 
         transformed_data = {
             "city": data["name"],
             "temperature": data["main"]["temp"], 
             "humidity": data["main"]["humidity"], 
-            "description": data["weather"][0]["description"]
+            "description": data["weather"][0]["description"],
+            "observed_at": datetime.fromtimestamp(data["dt"], tz=timezone.utc).isoformat()
         }
 
-        with open("transformed_data.json", "w", encoding="utf-8") as file:
+        with open("data/transformed_data.json", "w", encoding="utf-8") as file:
             json.dump(transformed_data, file, indent=4)
 
         logger.info("Weather data transformed successfully")

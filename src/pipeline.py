@@ -8,7 +8,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
     handlers=[
-        logging.FileHandler("open_weather_api.log", encoding="utf-8"),
+        logging.FileHandler("data/open_weather_api.log", encoding="utf-8"),
         logging.StreamHandler()
     ]
 )

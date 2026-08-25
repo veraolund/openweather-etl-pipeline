@@ -9,26 +9,23 @@ logger = logging.getLogger(__name__)
 def load():
     load_dotenv()
     db_password = os.getenv("DB_PASSWORD")
+    db_name = os.getenv("DB_NAME")
     conn_string = (
-        f"dbname=LearnAPI user=postgres password={db_password} "
+        f"dbname={db_name} user=postgres password={db_password} "
         f"host=localhost port=5432"
     )
 
     try:
-        with open("transformed_data.json", "r", encoding="utf-8") as file:
+        with open("data/transformed_data.json", "r", encoding="utf-8") as file:
             weather = json.load(file)
 
 
         with psycopg.connect(conn_string) as conn:
             with conn.cursor() as cur:
                 insert_query = """
-                    INSERT INTO weather_data(
-                        city,
-                        temperature,
-                        humidity,
-                        description
-                    )
-                    VALUES(%s, %s, %s, %s)
+                    INSERT INTO weather_data(city, temperature, humidity, description, observed_at)
+                    VALUES(%s, %s, %s, %s, %s)
+                    ON CONFLICT (city, observed_at) DO NOTHING
                 """
 
                 cur.execute(
@@ -37,7 +34,8 @@ def load():
                         weather["city"],
                         weather["temperature"],
                         weather["humidity"],
-                        weather["description"]
+                        weather["description"],
+                        weather["observed_at"]
                     )
                 )
             conn.commit()
