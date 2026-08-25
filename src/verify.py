@@ -8,8 +8,9 @@ logger = logging.getLogger(__name__)
 def verify():
     load_dotenv()
     db_password = os.getenv("DB_PASSWORD")
+    db_name = os.getenv("DB_NAME")
     conn_string = (
-        f"dbname=LearnAPI user=postgres password={db_password} "
+        f"dbname={db_name} user=postgres password={db_password} "
         f"host=localhost port=5432"
     )
 

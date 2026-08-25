@@ -29,14 +29,14 @@ Create an `.env`file in the root folder:
 
 Don't forget to include the `.env` file in the `.gitignore`!
 
-A PostgreSQL database named *LearnAPI*, including the table *weather_data*, is also required for running the pipeline. 
+A PostgreSQL database named `weather_analytics` is required. Create the `weather_data` table by running `schema.sql` (see file for instructions).
 
 ### Running the Pipeline
 Run: `python pipeline.py`  
 The following steps will be executed:  
 1. __Extract__: `extract.py` loads OPENWEATHER_API_KEY, calls OpenWeather endpoint with Stockholm coordinates, and dumps JSON response to raw_weather.json. HTTP errors and connection errors are distinguished and logged before re-raising.
 2. __Transform__: `transform.py` extracts city, temperature, humidity, and description from raw_weather.json, writing the simplified data to transformed_data.json while handling errors.
-3. __Load__: `load.py` reads transformed_data.json, connects to the LearnAPI PostgreSQL database, and inserts data into the weather_data table. Distinguishes connection failures from other database errors.
+3. __Load__: `load.py` reads transformed_data.json, connects to the weather_analytics PostgreSQL database, and inserts data into the weather_data table. Distinguishes connection failures from other database errors.
 4. __Verify__: `verify.py` reconnects to the database, checks that the table contains data, retrieves the most recent row, and validates the city, temperature, and humidity values.
 
 
