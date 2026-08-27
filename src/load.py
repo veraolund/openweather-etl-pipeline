@@ -4,10 +4,34 @@ import psycopg
 from dotenv import load_dotenv
 import logging
 
+load_dotenv()
+
 logger = logging.getLogger(__name__)
 
 def load():
-    load_dotenv()
+    """
+    Loads transformed weather data into PostgreSQL database.
+
+    This function reads transformed weather data from a local JSON file, connects
+    to a local PostgreSQL database, and runs an insertion query with values from 
+    the JSON file.
+
+    Envorinment Variables:
+    - DB_NAME (str): Name of target database
+    - DB_PASSWORD (str): Password for the postgres user
+
+    Side effects:
+    - Reads from data/transformed_data.json
+    - Inserts a record into the database table weather_data
+    - Logs messages to a configured logger
+
+    Raises:
+    - FileNotFoundError: If the input file is not found
+    - json.JSONDecodeError: If the input file contains invalid JSON data
+    - psycopg.OperationalError: If the database connection is unsuccessful
+    - psycopg.Error: If a database error occurs other than a connection error
+    - Exception: If an unexpected error occurs
+    """
     db_password = os.getenv("DB_PASSWORD")
     db_name = os.getenv("DB_NAME")
     conn_string = (

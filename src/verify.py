@@ -3,10 +3,32 @@ import psycopg
 from dotenv import load_dotenv
 import logging
 
+load_dotenv()
+
 logger = logging.getLogger(__name__)
 
 def verify():
-    load_dotenv()
+    """
+    Verifies expected data exists in PostgreSQL table weather_data.
+
+    This function connects to a local PostgreSQL database, verifies that the 
+    weather_data table is not empty, selects the latest inserted record and verifies
+    that vital values exist and are within a valid range. 
+    
+    Envorinment Variables:
+    - DB_NAME (str): Name of target database
+    - DB_PASSWORD (str): Password for the postgres user
+
+    Side effects:
+    - Queries the database table weather_data
+    - Logs messages to a configured logger
+
+    Raises:
+    - psycopg.OperationalError: If the database connection is unsuccessful
+    - psycopg.Error: If a database error occurs other than a connection error
+    - ValueError: If city or temperature is NULL, or if humidity is NULL or out of range
+    - Exception: If an unexpected error occurs
+    """
     db_password = os.getenv("DB_PASSWORD")
     db_name = os.getenv("DB_NAME")
     conn_string = (
@@ -28,7 +50,7 @@ def verify():
                     raise ValueError("Verification failed:  weather_data is empty")
 
                 cur.execute("""
-                    SELECT city, temperature, humidity, description
+                    SELECT city, temperature, humidity, description, observed_at
                     FROM weather_data
                     ORDER BY loaded_at DESC
                     LIMIT 1
@@ -44,9 +66,8 @@ def verify():
                 
                 if latest[2] is None or not 0 <= latest[2] <= 100:
                     raise ValueError("Verification failed: humidity is NULL or invalid.")
-                
 
-        logger.info(f"Verification completed successfully. Latest record for {latest[0]} is valid")  
+        logger.info(f"Verification completed successfully. Latest record for {latest[0]} is valid")
         
     except psycopg.OperationalError as e:
         logger.error(f"Databse connection failed: {e}")
