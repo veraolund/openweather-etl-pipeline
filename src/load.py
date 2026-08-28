@@ -46,6 +46,7 @@ def load():
 
         with psycopg.connect(conn_string) as conn:
             with conn.cursor() as cur:
+                # ON CONFLICT prevents insertion of duplicate rows with identical city and observation time
                 insert_query = """
                     INSERT INTO weather_data(city, temperature, humidity, description, observed_at)
                     VALUES(%s, %s, %s, %s, %s)

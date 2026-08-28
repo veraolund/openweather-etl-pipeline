@@ -9,6 +9,9 @@ CREATE TABLE weather_data (
     description VARCHAR(100) NOT NULL,
     observed_at TIMESTAMPTZ NOT NULL,
     loaded_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    -- UNIQUE prevents duplicate records with identical city and observation time,
+    -- while allowing multiple cities with a shared observation time or multiple
+    -- observation times for the same city
     UNIQUE (city, observed_at)
 );
 

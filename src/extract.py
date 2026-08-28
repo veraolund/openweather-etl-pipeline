@@ -13,11 +13,11 @@ def extract():
     Fetches weather data from OpenWeather API and saves it to a local JSON file.
 
     This function reads the API key and geographical latitude and longitude from environment 
-    veriables. It queries the OpenWeather Map API and writes the raw response payload to a
+    variables. It queries the OpenWeather Map API and writes the raw response payload to a
     local file.
 
-    Envorinment Variables:
-    - CITY_LAT (str): Latitude of tatget city
+    Environment Variables:
+    - CITY_LAT (str): Latitude of target city
     - CITY_LON (str): Longitude of target city
     - OPENWEATHER_API_KEY (str): OpenWeather authentication key
 
@@ -54,6 +54,7 @@ def extract():
         logger.info(f"Weather data successfully extracted and saved")
 
     except requests.exceptions.HTTPError as e:
+        # Log only the status code, since the whole exception includes the API key
         logger.error(f"API answered with status code: {e.response.status_code}")
         raise
 
