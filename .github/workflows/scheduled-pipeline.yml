@@ -2,7 +2,6 @@ name: Scheduled Pipeline
 
 on:
   schedule: 
-    # Runs once every hour, at minute 0
     - cron: "18 * * * *"
   workflow_dispatch:
 
