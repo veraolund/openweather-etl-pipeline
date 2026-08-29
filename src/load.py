@@ -34,9 +34,12 @@ def load():
     """
     db_password = os.getenv("DB_PASSWORD")
     db_name = os.getenv("DB_NAME")
+    db_user = os.getenv("DB_USER")
+    db_host = os.getenv("DB_HOST")
+    db_port = os.getenv("DB_PORT")
     conn_string = (
-        f"dbname={db_name} user=postgres password={db_password} "
-        f"host=localhost port=5432"
+        f"dbname={db_name} user={db_user} password={db_password} "
+        f"host={db_host} port={db_port} sslmode=require"
     )
 
     try:
