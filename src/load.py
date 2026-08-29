@@ -13,12 +13,15 @@ def load():
     Loads transformed weather data into PostgreSQL database.
 
     This function reads transformed weather data from a local JSON file, connects
-    to a local PostgreSQL database, and runs an insertion query with values from 
-    the JSON file.
+    to a PostgreSQL database (hosted on Neon), and runs an insertion query with 
+    values from the JSON file.
 
-    Envorinment Variables:
+    Environment Variables:
+    - DB_HOST (str): Hostname of the database server
+    - DB_PORT (str): Port number of the database server
     - DB_NAME (str): Name of target database
-    - DB_PASSWORD (str): Password for the postgres user
+    - DB_USER (str): Username for database authentication
+    - DB_PASSWORD (str): Password for database authentication
 
     Side effects:
     - Reads from data/transformed_data.json

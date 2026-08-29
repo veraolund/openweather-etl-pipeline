@@ -11,13 +11,16 @@ def verify():
     """
     Verifies expected data exists in PostgreSQL table weather_data.
 
-    This function connects to a local PostgreSQL database, verifies that the 
-    weather_data table is not empty, selects the latest inserted record and verifies
-    that vital values exist and are within a valid range. 
+    This function connects to a local PostgreSQL database (hosted on Neon), verifies 
+    that the weather_data table is not empty, selects the latest inserted record and 
+    verifies that vital values exist and are within a valid range. 
     
-    Envorinment Variables:
+    Environment Variables:
+    - DB_HOST (str): Hostname of the database server
+    - DB_PORT (str): Port number of the database server
     - DB_NAME (str): Name of target database
-    - DB_PASSWORD (str): Password for the postgres user
+    - DB_USER (str): Username for database authentication
+    - DB_PASSWORD (str): Password for database authentication
 
     Side effects:
     - Queries the database table weather_data
