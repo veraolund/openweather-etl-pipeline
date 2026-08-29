@@ -16,5 +16,5 @@ transformed_data.json
 # macOS
 .DS_Store
 
-# test coverage
+# Test coverage
 .coverage
