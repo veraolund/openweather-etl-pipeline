@@ -21,9 +21,11 @@ jobs:
     
       - name: Install dependencies
         run: pip install -r requirements.txt
+      
+      - name: Create data directory
+        run: mkdir -p data
 
       - name: Run pipeline
-        working-directory: src
         env:
           OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
           CITY_LAT: ${{ secrets.CITY_LAT }}
@@ -34,5 +36,4 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: |
-          mkdir -p ../data
-          python pipeline.py
+          python src/pipeline.py
