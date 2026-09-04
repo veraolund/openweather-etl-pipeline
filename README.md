@@ -1,4 +1,6 @@
 # OpenWeather ETL Pipeline
+![Tests](https://github.com/veraolund/openweather-etl-pipeline/actions/workflows/tests.yml/badge.svg)
+
 This is a small ETL pipeline that extracts live weather data for Stockholm from the [OpenWeather](https://openweathermap.org) REST API and transforms it, before loading it into a PostgreSQL database. Finally, a verification step checks the validity of the latest record to confirm the load succeeded.
 
 ### Pipeline Overview 
